@@ -1,45 +1,48 @@
-public class Animal {
 
-    //Atributos
+/**
+ * Clase base abstracta para todos los animales del sistema.
+ */
+public abstract class Animal {
+
     private String nombre;
     private int edad;
-    private String color;
+    private static int contadorAnimales = 0;
 
-    //Constructores
-    public Animal() {
-
+    public Animal(String nombre, int edad) throws ValidacionException {
+        setNombre(nombre);
+        setEdad(edad);
+        contadorAnimales++;
     }
 
-    public Animal(String nombre, int edad, String color) {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.color = color;
-    }
-
-    //Getters y Setters
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío.");
+        }
+        this.nombre = nombre.trim();
     }
+
     public int getEdad() {
         return edad;
     }
-    public void setEdad(int edad) {
+
+    public void setEdad(int edad) throws ValidacionException {
+        if (edad < 0 || edad > 100) {
+            throw new ValidacionException("La edad debe estar entre 0 y 100 años.");
+        }
         this.edad = edad;
     }
-    public String getColor() {
-        return color;
-    }
-    public void setColor(String color) {
-        this.color = color;
+
+    protected String generarIDInterno() {
+        return "AN-" + contadorAnimales + "-" + nombre.toUpperCase();
     }
 
-    
-    //Metodos
-    public void comer() {
-        System.out.println("El animal está comiendo");
+    public static int getContadorAnimales() {
+        return contadorAnimales;
     }
 
+    public abstract void hacerSonido();
 }

@@ -1,41 +1,29 @@
+
+/**
+ * Clase que representa un perro.
+ */
 public class Perro extends Animal {
-    private String razaPerro;
-    private boolean esAdiestrado;
-    
-    //Constructor
-    public Perro() {
-    
-    }
-    public Perro(String nombre, int edad, String color, String razaPerro, boolean esAdiestrado) {
-        super(nombre, edad, color);
-        this.razaPerro = razaPerro;
-        this.esAdiestrado = esAdiestrado;
+
+    private String raza;
+
+    public Perro(String nombre, int edad, String raza) throws ValidacionException {
+        super(nombre, edad);
+        setRaza(raza);
     }
 
-    //Getters y Setters
-    public String getRazaPerro() {
-        return razaPerro;
-    }
-    public void setRazaPerro(String razaPerro) {
-        this.razaPerro = razaPerro;
-    }
-    public boolean isEsAdiestrado() {
-        return esAdiestrado;
-    }
-    public void setEsAdiestrado(boolean esAdiestrado) {
-        this.esAdiestrado = esAdiestrado;
+    public String getRaza() {
+        return raza;
     }
 
-    //Metodos
-    public void mostrarDatosPerro(){
-        System.out.println("Nombre: " + getNombre());
-        System.out.println("Edad: " + getEdad());
-        System.out.println("Color: " + getColor());
-        System.out.println("Raza: " + getRazaPerro());
-        System.out.println("Adiestrado: " + isEsAdiestrado());
+    public void setRaza(String raza) {
+        if (raza == null || raza.trim().isEmpty()) {
+            throw new IllegalArgumentException("La raza no puede estar vacía.");
+        }
+        this.raza = raza.trim();
     }
-    
-    public void ladrar() {
-        System.out.println("El perro está ladrando");
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(getNombre() + " dice: ¡Guau guau!");
     }
 }

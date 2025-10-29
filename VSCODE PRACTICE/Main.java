@@ -1,84 +1,63 @@
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
+/**
+ * Clase principal para probar el sistema de animales.
+ */
 public class Main {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
+        try {
+            System.out.print("Ingrese el nombre del perro: ");
+            String nombrePerro = sc.nextLine();
 
-        System.out.println("----------------------- Sistema de adopción de animales -----------------------");
-        System.out.println("Ingrese el tipo de animal a adoptar (Perro/Gato/Pez): ");
-        System.out.println("1. Perro");
-        System.out.println("2. Gato");
-        System.out.println("3. Pez");
-        System.out.print("Seleccione un opcion: " );
-        int tipoAnimal = scan.nextInt();
-        scan.nextLine(); // Consumir el salto de línea pendiente
+            System.out.print("Ingrese la edad del perro: ");
+            int edadPerro = Integer.parseInt(sc.nextLine());
 
-        switch (tipoAnimal) {
-            case 1:
-                System.out.println("--- Datos del Perro ---");
-                System.out.print("Ingrese el nombre del perro: ");
-                String nombrePerro = scan.nextLine();
-                System.out.print("Ingrese la edad del perro: ");
-                int edadPerro = scan.nextInt();
-                scan.nextLine(); // Consumir el salto de línea pendiente
-                System.out.print("Ingrese el color del perro: ");
-                String colorPerro = scan.nextLine();
-                System.out.print("Ingrese la raza del perro: ");
-                String razaPerro = scan.nextLine();
-                System.out.print("¿El perro está adiestrado? (true/false): ");
-                boolean esAdiestrado = scan.nextBoolean();
-                
-                Perro perro = new Perro(nombrePerro, edadPerro, colorPerro, razaPerro, esAdiestrado);
-                
-                System.out.println("\n--- Datos del Perro Adoptado ---");
-                perro.mostrarDatosPerro();
+            System.out.print("Ingrese la raza del perro: ");
+            String raza = sc.nextLine();
 
-                break;
-            case 2:
-                System.out.println("--- Datos del Gato ---");
-                System.out.print("Ingrese el nombre del gato: ");
-                String nombreGato = scan.nextLine();
-                System.out.print("Ingrese la edad del gato: ");
-                int edadGato = scan.nextInt();
-                scan.nextLine(); // Consumir el salto de línea pendiente
-                System.out.print("Ingrese el color del gato: ");
-                String colorGato = scan.nextLine();
-                System.out.print("Ingrese la raza del gato: ");
-                String razaGato = scan.nextLine();
-                System.out.print("¿El gato es de interior? (true/false): ");
-                boolean esDeInterior = scan.nextBoolean();
+            Perro perro = new Perro(nombrePerro, edadPerro, raza);
+            perro.hacerSonido();
 
-                Gato gato = new Gato(nombreGato, edadGato, colorGato, razaGato, esDeInterior);
-                
-                System.out.println("---- Datos del Gato Adoptado ---");
-                gato.mostrarDatosGato();
-                break;
-            case 3:
-                System.out.println("--- Datos del Pez ---");
-                System.out.println("Ingrese el nombre del pez: ");
-                String nombrePez = scan.nextLine();
-                System.out.println("Ingrese la edad del pez: ");
-                int edadPez = scan.nextInt();scan.nextLine(); 
-                System.out.println("Ingrese el color del pez:");
-                String colorPez = scan.nextLine();
-                System.out.println("Ingrese la especie del pez: ");
-                String especiePez = scan.nextLine();
-                System.out.println("Ingrese el tipo de agua (Dulce/Salada): ");
-                String tipoAgua = scan.nextLine();
+            System.out.print("\nIngrese el nombre del gato: ");
+            String nombreGato = sc.nextLine();
 
-                Pez pez = new Pez(nombrePez, edadPez, colorPez, especiePez, tipoAgua);
-                System.out.println("\n--- Datos del Pez Adoptado ---");
-                pez.mostrarDatosPez();
-                break;
-            case 4:
-                System.out.println("Saliendo del sistema de adopción. ¡Hasta luego!");
-                break;  
-            default:
-                System.out.println("Opción no válida. Por favor, seleccione 1, 2 o 3.");
-                break;
+            System.out.print("Ingrese la edad del gato: ");
+            int edadGato = Integer.parseInt(sc.nextLine());
+
+            System.out.print("Ingrese el color del gato: ");
+            String color = sc.nextLine();
+
+            Gato gato = new Gato(nombreGato, edadGato, color);
+            gato.hacerSonido();
+
+            System.out.print("\nIngrese el nombre del pez: ");
+            String nombrePez = sc.nextLine();
+
+            System.out.print("Ingrese la edad del pez: ");
+            int edadPez = Integer.parseInt(sc.nextLine());
+
+            System.out.print("Ingrese el tipo de agua (dulce/salada): ");
+            String tipoAgua = sc.nextLine();
+
+            Pez pez = new Pez(nombrePez, edadPez, tipoAgua);
+            pez.hacerSonido();
+
+            System.out.println("\nTotal de animales creados: " + Animal.getContadorAnimales());
+
+        } catch (ValidacionException e) {
+            System.err.println("Error de validación: " + e.getMessage());
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.err.println("Error: La edad debe ser un número válido.");
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error en los datos: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Ocurrió un error inesperado: " + e.getMessage());
+        } finally {
+            sc.close();
         }
-        scan.close();
     }
 }
